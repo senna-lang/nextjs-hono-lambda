@@ -17,6 +17,12 @@ export class HonoLambdaStack extends cdk.Stack {
     })
     new apigw.LambdaRestApi(this, 'myapi', {
       handler: fn,
+      defaultCorsPreflightOptions: {
+        allowOrigins: apigw.Cors.ALL_ORIGINS,
+        allowMethods: apigw.Cors.ALL_METHODS,
+        allowHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+        allowCredentials: true,
+      },
     })
   }
 }

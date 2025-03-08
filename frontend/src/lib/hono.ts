@@ -1,4 +1,6 @@
 import { hc } from "hono/client";
 import { AppType } from "../../../hono-lambda/lambda/index";
 
-export const client = hc<AppType>(process.env.NEXT_PUBLIC_LAMBDA_URL ?? "");
+const LAMBDA_URL = process.env.NEXT_PUBLIC_LAMBDA_URL ?? "";
+
+export const client = hc<AppType>(LAMBDA_URL);
