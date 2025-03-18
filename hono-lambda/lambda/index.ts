@@ -1,6 +1,7 @@
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import { handle } from "hono/aws-lambda";
+import { cors } from "hono/cors";
 import { z } from "zod";
 
 // TODOアイテムの型定義
@@ -51,6 +52,18 @@ const generateId = (): string => {
 };
 
 const app = new Hono();
+
+app.use(
+  "/*",
+  cors({
+    origin: "*", // すべてのオリジンを許可
+    allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowHeaders: ["Content-Type", "Authorization"],
+    exposeHeaders: ["Content-Length"],
+    maxAge: 86400,
+    credentials: false, // credentialsをfalseに変更（'*'を使用する場合は必須）
+  })
+);
 
 const route = app
   .get("/", c => {
